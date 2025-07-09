@@ -1,0 +1,344 @@
+/* src/styles/App.css */
+
+/* 
+ * Reseteo básico y configuración de altura para que la aplicación ocupe toda la ventana
+ */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita el scroll global del navegador */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-primary); 
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave al cambiar de tema */
+}
+
+#root {
+  height: 100%;
+  display: flex; /* Hacemos #root el contenedor flex principal */
+  flex-direction: column; /* Para que sus hijos (app-container) se apilen verticalmente */
+  align-items: center; /* Centra el app-container horizontalmente */
+  width: 100%; /* Asegura que #root ocupe todo el ancho */
+}
+
+/* 
+ * Contenedor principal de la aplicación
+ */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Permite que el app-container ocupe el espacio restante dentro de #root */
+  background-color: var(--background-secondary); /* Color de fondo secundario */
+  border-radius: 8px;
+  overflow: hidden; /* Asegura que los elementos internos no se desborden del contenedor */
+  transition: background-color 0.3s ease;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 1200px; /* Limita el ancho máximo para centrarlo */
+  margin: 20px 0; /* Margen superior e inferior, pero no lateral para centrado */
+  box-shadow: 0 0 15px var(--shadow-color); /* Añadimos sombra aquí para el contenedor principal */
+  height: calc(100% - 40px); /* Ajusta la altura para que quepan los 20px de margen superior e inferior */
+}
+
+/* 
+ * Cabecera de la aplicación
+ */
+.app-header {
+  background-color: var(--accent-secondary); /* Color de acento secundario */
+  color: var(--text-primary);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  border-bottom: 2px solid var(--accent-primary); /* Color de acento primario para el borde */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0; /* Evita que el header se encoja */
+}
+
+.logo {
+  font-size: 1.5em;
+  color: var(--accent-primary); /* Color de acento primario para el logo */
+  transition: color 0.3s ease;
+}
+
+.user-time-block {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--background-primary); /* Fondo para este bloque */
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 5px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-info {
+  font-size: 0.9em;
+  color: var(--text-secondary); /* Color de texto secundario */
+  transition: color 0.3s ease;
+}
+
+.timer {
+  background-color: var(--timer-background); /* Color de texto del temporizador */
+  color: var(--timer-text); /* Color de texto del temporizador */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 
+ * Barra de navegación principal
+ */
+.app-nav {
+  background-color: var(--background-primary); /* Color de fondo principal */
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color); /* Color de borde */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0; /* Evita que la nav se encoja */
+}
+
+.nav-link {
+  color: var(--text-secondary); /* Color de texto secundario para enlaces inactivos */
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: var(--background-secondary); /* Color de fondo secundario al pasar el ratón */
+  color: var(--text-primary); /* Color de texto principal */
+}
+
+.nav-link.active {
+  background-color: var(--accent-primary); /* Color de acento primario para la pestaña activa */
+  color: white; /* Texto blanco para contraste */
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* 
+ * Área de Contenido Principal (donde se cargan las páginas)
+ */
+.app-main-content {
+  flex-grow: 1; /* Permite que ocupe el espacio restante */
+  background-color: var(--background-secondary); /* Color de fondo secundario */
+  display: flex; 
+  flex-direction: column; /* Contenido fluye verticalmente */
+  align-items: center; /* Centra horizontalmente el page-content */
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-y: auto; /* ESTE ES EL ÚNICO LUGAR CON SCROLL VERTICAL PARA EL CONTENIDO PRINCIPAL */
+  padding: 20px; /* Padding para el contenido dentro del main-content */
+  min-height: 0; /* Permite que flex-grow funcione correctamente */
+}
+
+/* 
+ * Contenedor de contenido de cada página (Información, Progreso, etc.)
+ */
+.page-content {
+  background-color: var(--background-primary); /* Color de fondo principal */
+  padding: 30px; /* Padding interno para el contenido */
+  border-radius: 10px;
+  box-shadow: 0 0 15px var(--shadow-color);
+  width: 800px;
+  max-width: 90%; /* Responsividad básica para pantallas pequeñas */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  text-align: left; /* Alinea el texto a la izquierda dentro del page-content */
+  flex-shrink: 0; /* Evita que se encoja si no hay espacio suficiente */
+  /* Eliminamos overflow-y: auto y max-height de aquí. El app-main-content manejará el scroll. */
+}
+
+/* Estilos específicos para el contenido de información y tests */
+.page-content h2 {
+  color: var(--accent-primary);
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.page-content h3 {
+  color: var(--accent-primary); /* Color de acento primario para los títulos de sección */
+  margin-top: 40px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--text-secondary); /* Un borde sutil */
+  padding-bottom: 5px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.page-content h4 {
+  color: var(--text-primary); /* Color de texto primario para subtítulos */
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 1.15em;
+  transition: color 0.3s ease;
+}
+
+.page-content p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.page-content ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 0;
+  text-align: left; /* Asegura que las listas se alineen a la izquierda */
+}
+
+.page-content li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Estilos para la sección de configuración */
+.config-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--background-secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  text-align: left; /* Asegura que el texto dentro de las secciones de config se alinee a la izquierda */
+}
+
+.config-section h3 {
+  color: var(--accent-primary);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+}
+
+.theme-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.theme-button {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--text-secondary);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  min-width: 150px;
+}
+
+.theme-button:hover {
+  background-color: var(--accent-secondary);
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+}
+
+.theme-button.active {
+  background-color: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.save-button {
+  background-color: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: var(--accent-secondary);
+  transform: translateY(-1px);
+}
+
+/* Estilos para el área de texto del test en Tests.jsx */
+.test-text-area {
+  background-color: var(--background-primary); /* Cambiado a primary para que coincida con page-content */
+  color: var(--text-primary);
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  /* Eliminamos max-height y overflow-y de aquí */
+  text-align: justify; /* Justifica el texto para una mejor lectura */
+  line-height: 1.8;
+  font-size: 1.1em;
+  /* Eliminamos los estilos de scrollbar específicos de aquí */
+}
+
+/* Estilos para la lista de preguntas en Tests.jsx */
+.questions-list {
+  /* Eliminamos max-height y overflow-y de aquí */
+  padding-right: 15px; /* Espacio para la barra de scroll */
+  /* Eliminamos los estilos de scrollbar específicos de aquí */
+}
+
+
+.question-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--text-secondary);
+  padding-bottom: 15px;
+}
+
+.question-item p {
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.options button {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--text-secondary);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 5px;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background-color: var(--accent-secondary);
+  border-color: var(--accent-primary);
+}
+
+.options button.selected { /* Clase para la opción seleccionada */
+  background-color: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+/* Estilos para los resultados del test */
+.test-results p {
+  margin-bottom: 10px;
+}
+
+.test-results strong {
+  color: var(--accent-primary);
+}
